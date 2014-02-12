@@ -16,6 +16,7 @@ use Drupal\filter\Plugin\FilterBase;
  *   id = "filter_yuml",
  *   module = "yuml",
  *   title = @Translation("yUML Format"),
+ *   description = @Translation("Use the http://yuml.me service to generate UML diagrams."),
  *   type = Drupal\filter\Plugin\FilterInterface::TYPE_TRANSFORM_IRREVERSIBLE,
  *   settings = {
  *     "url" = "http://yuml.me",
