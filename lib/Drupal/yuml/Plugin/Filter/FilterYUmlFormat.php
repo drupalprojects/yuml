@@ -79,7 +79,8 @@ class FilterYUmlFormat extends FilterBase {
   static function help($long = FALSE) {
     if ($long) {
       return 'With yUML Format you can create inline UML Diagrams.<br/>'
-          . 'See for more info <a href="http://yuml.me">yUML format</a>.'
+          . self::options_help() . '<br/>'
+          . 'For more info <a href="http://yuml.me">yUML format</a>.'
       ;
     }
     else {
@@ -101,7 +102,7 @@ class FilterYUmlFormat extends FilterBase {
         // Make sure parsing continues.
         return TRUE;
       }
-      
+
       $this->lines = array();
 
       $mode = 'lines';
@@ -117,7 +118,7 @@ class FilterYUmlFormat extends FilterBase {
           $this->lines[] = $line;
         }
         else if ($mode == 'links') {
-          
+
         }
       }
       return TRUE;
@@ -149,7 +150,30 @@ class FilterYUmlFormat extends FilterBase {
     }
   }
 
-  function options() {
+  static function options_help() {
+    $text = "<dl>";
+
+    foreach (static::options() as $key => $option) {
+      $text .= '<dt>' . $key . '</dt>';
+      $text .= '<dd>';
+      $lines = array();
+      if (isset($option['required']) && $option['required']) {
+        $lines[] = t("Required");
+      }
+      $lines[] = t("Valid values are: %values", array('%values' => join(', ', $option['values'])));
+      if (isset($option['default']) && $option['default']) {
+        $lines[] = t('Default value: %default.', array('%default' => $option['default']));
+      }
+      $text .= join("<br/>", $lines);
+      $text .= '<dd>';
+    }
+
+    $text .= "</dl>";
+    $text .= "Place this between &lt;pre&gt; tags <pre>\n[yuml diagram:usecase style:scruffy\n[Text editor]-(Writes article)\n(Writes article)>(Drupal)\n(Drupal)>(Uses yUML)\n]</pre>";
+    return $text;
+  }
+
+  static function options() {
     return array(
       'diagram' => array(
         'required' => TRUE,
@@ -172,7 +196,6 @@ class FilterYUmlFormat extends FilterBase {
         ),
         'default' => 'plain',
         'format' => 'style:%s',
-        'required' => TRUE,
       ),
     );
   }
@@ -184,7 +207,7 @@ class FilterYUmlFormat extends FilterBase {
    *   Contains '[yuml ...'
    */
   function parseMeta($meta) {
-    $options = $this->options();
+    $options = static::options();
 
     $result = array();
     // The start is done by a [ which must be escaped for the regex: \\[
