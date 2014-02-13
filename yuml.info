@@ -1,0 +1,5 @@
+name = yUML
+description = 'Create and share simple UML diagrams.'
+package = Visualisation
+version = 7.x-1.x
+core = 7.x
