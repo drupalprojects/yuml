@@ -144,7 +144,7 @@ class YUMLParser {
       $settings = array(
         'url' => $config['url'],
         'diagram' => $meta['diagram'],
-        'style' => $meta['style'] . ';dir:' . $meta['dir'],
+        'style' => $meta['style'] . ';dir:' . $meta['dir'] . ';scale:' . $meta['scale'],
         'content' => join(',', $this->lines),
       );
       $url = sprintf("%s/diagram/%s;/%s/%s", $settings['url'], $settings['style'], $settings['diagram'], $settings['content']);
@@ -190,6 +190,7 @@ class YUMLParser {
       'dir' => array(
         'values' => array('LR', 'TD', 'RL'),
         'format' => 'dir:%s',
+        'default' => 'LR',
       ),
       'style' => array(
         'values' => array(
