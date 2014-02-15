@@ -142,7 +142,7 @@ class FilterYUmlFormat extends FilterBase {
       $settings = array(
         'url' => $config['url'],
         'diagram' => $meta['diagram'],
-        'style' => $meta['style'],
+        'style' => $meta['style'] . ';dir:' . $meta['dir'] . ';scale:' . $meta['scale'],
         'content' => join(',', $this->lines),
       );
       $url = sprintf("%s/diagram/%s;/%s/%s", $settings['url'], $settings['style'], $settings['diagram'], $settings['content']);
@@ -183,11 +183,13 @@ class FilterYUmlFormat extends FilterBase {
         ),
       ),
       'scale' => array(
-        'values' => array(180, 120, 80, 60),
+        'values' => array(180, 120, 100, 80, 60),
+        'default' => 100,
       ),
       'dir' => array(
         'values' => array('LR', 'TD', 'RL'),
         'format' => 'dir:%s',
+        'default' => 'LR',
       ),
       'style' => array(
         'values' => array(
@@ -241,6 +243,9 @@ class FilterYUmlFormat extends FilterBase {
             $result[$key] = $settings['default'];
           }
         }
+      }
+      if (!isset($result[$key]) && isset($settings['default'])) {
+        $result[$key] = $settings['default'];
       }
     }
     if ($this->meta !== FALSE) {
