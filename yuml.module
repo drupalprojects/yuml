@@ -3,7 +3,7 @@
 function yuml_filter_info() {
   $filters['yuml_yuml'] = array(
     'title' => t('Allows for yUML input'),
-    'description' => t('Use the !link to generate UML diagrams.', array('!link'=> l('yUML service', 'http://yuml.me'))),
+    'description' => t('Use the !link to generate UML diagrams.', array('!link' => l('yUML service', 'http://yuml.me'))),
     'process callback' => 'yuml_filter_process',
     'settings callback' => 'yuml_filter_settings',
     'default settings' => array(
@@ -149,6 +149,9 @@ class YUMLParser {
       );
       $url = sprintf("%s/diagram/%s;/%s/%s", $settings['url'], $settings['style'], $settings['diagram'], $settings['content']);
       $result = '<img src="' . $url . '" />';
+      if ($meta['debug']) {
+        $result .= '<xmp>' . $result . '</xmp>';
+      }
       $this->text = substr($this->text, 0, $this->start) . $result . substr($this->text, $this->end + 1);
     }
   }
@@ -178,6 +181,10 @@ class YUMLParser {
 
   static function options() {
     return array(
+      'debug' => array(
+        'values' => array(0, 1),
+        'default' => 0,
+      ),
       'diagram' => array(
         'required' => TRUE,
         'values' => array(
