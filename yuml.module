@@ -38,7 +38,7 @@ function yuml_filter_settings($form, &$form_state, $filter, $format, $defaults, 
   return $elements;
 }
 
-function yml_filter_tips($filter, $format, $long) {
+function yuml_filter_tips($filter, $format, $long) {
   return YUMLParser::help($long);
 }
 
