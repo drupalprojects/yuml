@@ -185,7 +185,8 @@ class YUMLParser {
         ),
       ),
       'scale' => array(
-        'values' => array(180, 120, 80, 60),
+        'values' => array(180, 120, 100, 80, 60),
+        'default' => 100,
       ),
       'dir' => array(
         'values' => array('LR', 'TD', 'RL'),
