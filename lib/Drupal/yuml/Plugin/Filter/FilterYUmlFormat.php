@@ -147,6 +147,9 @@ class FilterYUmlFormat extends FilterBase {
       );
       $url = sprintf("%s/diagram/%s;/%s/%s", $settings['url'], $settings['style'], $settings['diagram'], $settings['content']);
       $result = '<img src="' . $url . '" />';
+      if ($meta['debug']) {
+        $result .= '<xmp>' . $result . '</xmp>';
+      }
       $this->text = substr($this->text, 0, $this->start) . $result . substr($this->text, $this->end + 1);
     }
   }
@@ -176,6 +179,10 @@ class FilterYUmlFormat extends FilterBase {
 
   static function options() {
     return array(
+      'debug' => array(
+        'values' => array(0, 1),
+        'default' => 0,
+      ),
       'diagram' => array(
         'required' => TRUE,
         'values' => array(
